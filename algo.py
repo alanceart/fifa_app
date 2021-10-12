@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as stm
 import pandas as pd # our main data management package
 import matplotlib.pyplot as plt # our main display package
 import numpy as np # used for managing NaNs
@@ -203,4 +203,4 @@ plt.grid(axis='x')
 plt.legend()
 plt.legend(loc=0, frameon=False,fontsize ='small')
 
-st.pyplot()
+stm.pyplot()
