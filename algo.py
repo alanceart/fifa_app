@@ -155,7 +155,7 @@ for i in range(1,nb_match_joues+1):
          plt.axvspan(x1,x2,facecolor='red',alpha=0.3)
 
 for i in range(1,nb_match_joues+1):
-        plt.text(i-1,10.5,score_equipe[i-1], color='black', bbox={'color':'white', 'edgecolor':'black','alpha':5,'pad':3}, ha='center', va='center')
+        plt.text(i-1,10.5,score_equipe[i-1], color='black', bbox={'color':'white', 'edgecolor':'black','alpha':0.5,'pad':3}, ha='center', va='center')
 
 axes = plt.gca()
 axes.set_ylim([df_note.min().min()-1,10.9])   
