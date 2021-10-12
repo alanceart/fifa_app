@@ -1,3 +1,4 @@
+import streamlit as st
 import pandas as pd # our main data management package
 import matplotlib.pyplot as plt # our main display package
 import numpy as np # used for managing NaNs
@@ -201,3 +202,5 @@ for i in range(1,nb_joueurs+1):
 plt.grid(axis='x')
 plt.legend()
 plt.legend(loc=0, frameon=False,fontsize ='small')
+
+st.pyplot()
