@@ -31,7 +31,9 @@ header_but = ["Buts Alexandre", "Buts Rachel", "Buts Pierre", "Buts Baptiste", "
 header_pd = ["Pd Alexandre", "Pd Rachel", "Pd Pierre", "Pd Baptiste", "Pd Romain", "Pd Paul"]
 comptes = [alexandre,rachel,pierre,baptiste,romain,paul]
 header = ["Alexandre","Rachel","Pierre","Baptiste","Romain","Paul"]
-nb_match_joues = 9
+
+
+nb_match_joues = st.slider('Nombre de matchs', 5, 10, 10, 1)
 
 
 #Récupération note joueurs
