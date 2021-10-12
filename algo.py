@@ -33,7 +33,7 @@ comptes = [alexandre,rachel,pierre,baptiste,romain,paul]
 header = ["Alexandre","Rachel","Pierre","Baptiste","Romain","Paul"]
 
 
-nb_match_joues = st.slider('Nombre de matchs', 5, 10, 10, 1)
+nb_match_joues = stm.slider('Nombre de matchs', 5, 10, 10, 1)
 
 
 #Récupération note joueurs
