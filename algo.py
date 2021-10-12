@@ -128,7 +128,7 @@ score_equipe = score_equipe[val:]
 
 #Plot
 
-plt.figure()
+fig = plt.figure()
 plt.plot(df_note.index,df_note["Rachel"],linestyle='-', marker='.', markersize = 10, label="Rachel", color="pink")
 plt.plot(df_note.index,df_note["Alexandre"],linestyle='-', marker='.', markersize = 10, label="Alexandre")
 plt.plot(df_note.index,df_note["Pierre"],linestyle='-', marker='.', markersize = 10, label="Pierre")
@@ -203,4 +203,4 @@ plt.grid(axis='x')
 plt.legend()
 plt.legend(loc=0, frameon=False,fontsize ='small')
 
-stm.pyplot()
+stm.pyplot(fig)
