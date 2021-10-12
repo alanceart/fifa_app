@@ -135,9 +135,9 @@ plt.plot(df_note.index,df_note["Baptiste"],linestyle='-', marker='.', markersize
 plt.plot(df_note.index,df_note["Romain"],linestyle='-', marker='.', markersize = 10, label="Romain")
 plt.plot(df_note.index,df_note["Paul"],linestyle='-', marker='.', markersize = 10, label="Paul")
 
-but = mpimg.imread('C:/Users/alexandre.lanceart/Documents/Python Scripts/Fifa/Logo/but.png')
+but = mpimg.imread('./Logo/but.png')
 but = OffsetImage(but, zoom=0.015)
-pd = mpimg.imread('C:/Users/alexandre.lanceart/Documents/Python Scripts/Fifa/Logo/pd.png')
+pd = mpimg.imread('./Logo/pd.png')
 pd = OffsetImage(pd, zoom=0.015)
 
 
