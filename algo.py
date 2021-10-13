@@ -110,7 +110,7 @@ def obtention_donnes_but_pd():
     liste_pd = np.asarray(liste_pd)
     liste_pd[liste_pd == '--'] = '-1'
     
-    long = liste_note.shape[1]
+    long = liste_but.shape[1]
     match = []
     for i in range(1,long+1):
         val = "M" + str(i)
