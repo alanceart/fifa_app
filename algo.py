@@ -12,13 +12,15 @@ from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationB
 import matplotlib.image as mpimg
 import math
 
-#Infos scraping
+#UI
 
-stm.title('Club Pro FC Vadrouille')
+stm.title('Club Pro - FC Vadrouille')
 stm.sidebar.header('Paramètres du graphique')
 nb_match_joues = stm.sidebar.slider('Nombre de matchs', 5, 10, 10, 1)
-joueurs_selectionnes = stm.multiselect('Joueurs',['Alexandre', 'Rachel', 'Pierre', 'Baptiste','Romain','Paul','José'],['Alexandre', 'Rachel', 'Pierre', 'Baptiste','Romain','Paul','José'])
-print(joueurs_selectionnes)
+joueurs_selectionnes = stm.sidebar.multiselect('Joueurs',['Alexandre', 'Rachel', 'Pierre', 'Baptiste','Romain','Paul','José'],['Alexandre', 'Rachel', 'Pierre', 'Baptiste','Romain','Paul','José'])
+
+
+#Infos scraping
 
 alexandre = "https://proclubshead.com/22/club/pc-69685/player/Lanceou/form-league/"
 rachel = "https://proclubshead.com/22/club/pc-69685/player/RachelLaFleur/form-league/"
@@ -38,100 +40,140 @@ header_pd = ["Pd Alexandre", "Pd Rachel", "Pd Pierre", "Pd Baptiste", "Pd Romain
 comptes = [alexandre,rachel,pierre,baptiste,romain,paul]
 header = ["Alexandre","Rachel","Pierre","Baptiste","Romain","Paul"]
 
-
+##################
 
 #Récupération note joueurs
-liste_note = []
-j=0
-for i in comptes :
-    r = requests.get(i)
-    c = r.content
-    soup = BeautifulSoup(c,)
-    note_joueur = []
-    compteur = 1
-    for row in soup.findAll('table')[0].tbody.findAll('tr'):
-        if compteur <= nb_match_joues:
-            val = row.findAll('td')[1].text
-            note_joueur.insert(0,val)
-        compteur = compteur + 1
-    liste_note.append(note_joueur)
-    j=j+1
 
-liste_note = np.asarray(liste_note)
-liste_note[liste_note == '--'] = '-1'
+@stm.cache(ttl=60*10)
+def obtention_donnes_note():
+    liste_note = []
+    j=0
+    for i in comptes :
+        r = requests.get(i)
+        c = r.content
+        soup = BeautifulSoup(c,)
+        note_joueur = []
+        compteur = 1
+        for row in soup.findAll('table')[0].tbody.findAll('tr'):
+            if compteur <= 10:
+                val = row.findAll('td')[1].text
+                note_joueur.insert(0,val)
+            compteur = compteur + 1
+        liste_note.append(note_joueur)
+        j=j+1
 
-long = liste_note.shape[1]
-match = []
-for i in range(1,long+1):
-    val = "M" + str(i)
-    match.append(val)
+    liste_note = np.asarray(liste_note)
+    liste_note[liste_note == '--'] = '-1'
 
-df_note=pd.DataFrame(liste_note, columns=match) 
-df_note.index = header
-df_note = df_note.T
-df_note = df_note.apply(pd.to_numeric)
-df_note[df_note == -1] = None
+    long = liste_note.shape[1]
+    match = []
+    for i in range(1,long+1):
+        val = "M" + str(i)
+        match.append(val)
 
-liste_but = []
-liste_pd = []
-j=0
-for i in comptes :
-    r = requests.get(i)
-    c = r.content
-    soup = BeautifulSoup(c,)
-    but_joueur = []
-    pd_joueur = []
-    compteur = 1
-    for row in soup.findAll('table')[0].tbody.findAll('tr'):
-        if compteur <= nb_match_joues:
-            val_but = row.findAll('td')[3].text
-            but_joueur.insert(0,val_but)
-            val_pd = row.findAll('td')[6].text
-            pd_joueur.insert(0,val_pd)
-        compteur = compteur + 1
-    liste_but.append(but_joueur)
-    liste_pd.append(pd_joueur)
-    j=j+1
+    df_note=pd.DataFrame(liste_note, columns=match) 
+    df_note.index = header
+    df_note = df_note.T
+    df_note = df_note.apply(pd.to_numeric)
+    df_note[df_note == -1] = None
+    
+    return df_note
 
-liste_but = np.asarray(liste_but)
-liste_but[liste_but == '--'] = '-1'
-liste_pd = np.asarray(liste_pd)
-liste_pd[liste_pd == '--'] = '-1'
 
-df_but=pd.DataFrame(liste_but, columns=match) 
-df_but.index = header
-df_but = df_but.T
-df_but = df_but.apply(pd.to_numeric)
-df_but[df_but == -1] = None
+#Récupération but_pd joueurs
 
-df_pd=pd.DataFrame(liste_pd, columns=match) 
-df_pd.index = header
-df_pd = df_pd.T
-df_pd = df_pd.apply(pd.to_numeric)
-df_pd[df_pd == -1] = None
+@stm.cache(ttl=60*10)
+def obtention_donnes_but_pd():
+    liste_but = []
+    liste_pd = []
+    j=0
+    for i in comptes :
+        r = requests.get(i)
+        c = r.content
+        soup = BeautifulSoup(c,)
+        but_joueur = []
+        pd_joueur = []
+        compteur = 1
+        for row in soup.findAll('table')[0].tbody.findAll('tr'):
+            if compteur <= 10:
+                val_but = row.findAll('td')[3].text
+                but_joueur.insert(0,val_but)
+                val_pd = row.findAll('td')[6].text
+                pd_joueur.insert(0,val_pd)
+            compteur = compteur + 1
+        liste_but.append(but_joueur)
+        liste_pd.append(pd_joueur)
+        j=j+1
+
+    liste_but = np.asarray(liste_but)
+    liste_but[liste_but == '--'] = '-1'
+    liste_pd = np.asarray(liste_pd)
+    liste_pd[liste_pd == '--'] = '-1'
+
+    df_but=pd.DataFrame(liste_but, columns=match) 
+    df_but.index = header
+    df_but = df_but.T
+    df_but = df_but.apply(pd.to_numeric)
+    df_but[df_but == -1] = None
+
+    df_pd=pd.DataFrame(liste_pd, columns=match) 
+    df_pd.index = header
+    df_pd = df_pd.T
+    df_pd = df_pd.apply(pd.to_numeric)
+    df_pd[df_pd == -1] = None
+    
+    return df_but, df_pd
+
 
 #Récupérations résultats WIN/DEFAITE
-r = requests.get(match_club)
-c = r.content
-soup = BeautifulSoup(c,)
-res_equipe = []
-main_content = soup.find_all('li', attrs = {'class': ['badge list-inline-item match-result me-1 px-0 text-light bg-result-win','badge list-inline-item match-result me-1 px-0 text-light bg-result-draw','badge list-inline-item match-result me-1 px-0 text-light bg-result-loss']})
-for item in main_content:
-    res_equipe.append(item.text)
-val = nb_match_joues * -1
-res_equipe = res_equipe[val:]    
+
+@stm.cache(ttl=60*10)
+def obtention_res():
+    r = requests.get(match_club)
+    c = r.content
+    soup = BeautifulSoup(c,)
+    res_equipe = []
+    main_content = soup.find_all('li', attrs = {'class': ['badge list-inline-item match-result me-1 px-0 text-light bg-result-win','badge list-inline-item match-result me-1 px-0 text-light bg-result-draw','badge list-inline-item match-result me-1 px-0 text-light bg-result-loss']})
+    for item in main_content:
+        res_equipe.append(item.text)
+    val = 10 * -1
+    res_equipe = res_equipe[val:]
+    
+    return res_equipe
+
 
 #Recupération résultats score
-r = requests.get(match_club)
-c = r.content
-soup = BeautifulSoup(c,)
-score_equipe = []
-main_content = soup.find_all('div', attrs = {'class': ['col-auto font-tabular-nums px-3 py-2 text-light bg-result-win','col-auto font-tabular-nums px-3 py-2 text-light bg-result-draw','col-auto font-tabular-nums px-3 py-2 text-light bg-result-loss']})
-for item in main_content:
-    score_equipe.insert(0,item.text)
-val = nb_match_joues * -1
-score_equipe = score_equipe[val:]
 
+@stm.cache(ttl=60*10)
+def obtention_score():
+    r = requests.get(match_club)
+    c = r.content
+    soup = BeautifulSoup(c,)
+    score_equipe = []
+    main_content = soup.find_all('div', attrs = {'class': ['col-auto font-tabular-nums px-3 py-2 text-light bg-result-win','col-auto font-tabular-nums px-3 py-2 text-light bg-result-draw','col-auto font-tabular-nums px-3 py-2 text-light bg-result-loss']})
+    for item in main_content:
+        score_equipe.insert(0,item.text)
+    val = 10 * -1
+    score_equipe = score_equipe[val:]
+    
+    return score_equipe
+
+###########
+
+#Recupération données
+df_note = obtention_donnes_note()
+df_but, df_pd = obtention_donnes_but_pd()
+res_equipe = obtention_res()
+score_equipe = obtention_score()
+
+#Adaptation nombre matchs
+df_note = df_note.head(nb_match_joues)
+df_but = df_but.head(nb_match_joues)
+df_pd = df_pd.head(nb_match_joues)
+val_temp = nb_match_joues * -1
+res_equipe = res_equipe[val_temp:]
+score_equipe = score_equipe[val_temp:]
+    
 #Plot
 
 fig = plt.figure()
