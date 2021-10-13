@@ -17,8 +17,9 @@ import math
 stm.title('Club Pro - FC Vadrouille')
 stm.sidebar.header('Paramètres du graphique')
 nb_match_joues = stm.sidebar.slider('Nombre de matchs', 5, 10, 10, 1)
-joueurs_selectionnes = stm.sidebar.multiselect('Joueurs',['Alexandre', 'Rachel', 'Pierre', 'Baptiste','Romain','Paul','José'],['Alexandre', 'Rachel', 'Pierre', 'Baptiste','Romain','Paul','José'])
-
+joueurs_selectionnes = stm.sidebar.multiselect('Joueurs',['Alexandre', 'Rachel', 'Pierre', 'Baptiste','Romain','Paul'],['Alexandre', 'Rachel', 'Pierre', 'Baptiste','Romain','Paul'])
+print('coucou')
+print(joueurs_selectionnes)
 
 #Infos scraping
 
