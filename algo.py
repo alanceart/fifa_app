@@ -36,8 +36,8 @@ match_club = "https://proclubshead.com/22/club/pc-69685/matches-league/"
 
 #comptes = [rachel,alexandre,pierre]
 #header = ["Rachel","Alexandre","Pierre"]
-header_but = ["Buts Alexandre", "Buts Rachel", "Buts Pierre", "Buts Baptiste", "Buts Romain","Buts Paul"]
-header_pd = ["Pd Alexandre", "Pd Rachel", "Pd Pierre", "Pd Baptiste", "Pd Romain", "Pd Paul"]
+#header_but = ["Buts Alexandre", "Buts Rachel", "Buts Pierre", "Buts Baptiste", "Buts Romain","Buts Paul"]
+#header_pd = ["Pd Alexandre", "Pd Rachel", "Pd Pierre", "Pd Baptiste", "Pd Romain", "Pd Paul"]
 comptes = [alexandre,rachel,pierre,baptiste,romain,paul]
 header = ["Alexandre","Rachel","Pierre","Baptiste","Romain","Paul"]
 
@@ -181,11 +181,21 @@ val_temp = nb_match_joues * -1
 res_equipe = res_equipe[val_temp:]
 score_equipe = score_equipe[val_temp:]
     
+#Verif_joueurs
+
+if 'Alexandre' not in joueurs_selectionnes:
+    df_note.drop['Alexandre']
+    df_but.drop['Alexandre']
+    df_pd.drop['Alexandre']
+
+
+    
 #Plot
 
 fig = plt.figure()
 plt.plot(df_note.index,df_note["Rachel"],linestyle='-', marker='.', markersize = 10, label="Rachel", color="pink")
-plt.plot(df_note.index,df_note["Alexandre"],linestyle='-', marker='.', markersize = 10, label="Alexandre")
+if 'Alexandre' in joueurs_selectionnes:
+    plt.plot(df_note.index,df_note["Alexandre"],linestyle='-', marker='.', markersize = 10, label="Alexandre")
 plt.plot(df_note.index,df_note["Pierre"],linestyle='-', marker='.', markersize = 10, label="Pierre")
 plt.plot(df_note.index,df_note["Baptiste"],linestyle='-', marker='.', markersize = 10, label="Baptiste")
 plt.plot(df_note.index,df_note["Romain"],linestyle='-', marker='.', markersize = 10, label="Romain")
@@ -217,12 +227,12 @@ axes.set_ylim([df_note.min().min()-1,10.9])
 axes.set_xlim(-0.5,nb_match_joues+nb_match_joues/7) 
 
 
-nb_joueurs = len(header)
+nb_joueurs = len(joueurs_selectionnes)
 
 for i in range(1,nb_joueurs+1):
-    note_temp = df_note[header[i-1]]
-    but_temp = df_but[header[i-1]]
-    pd_temp = df_pd[header[i-1]]
+    note_temp = df_note[joueurs_selectionnes[i-1]]
+    but_temp = df_but[joueurs_selectionnes[i-1]]
+    pd_temp = df_pd[joueurs_selectionnes[i-1]]
     for j in range(1,nb_match_joues+1):
         if not(math.isnan(note_temp[j-1])):
             note_match_j = note_temp[j-1]
