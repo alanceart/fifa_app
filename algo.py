@@ -14,6 +14,11 @@ import math
 
 #Infos scraping
 
+sidebar = stm.sidebar()
+
+with sidebar :
+    nb_match_joues = stm.slider('Nombre de matchs', 5, 10, 10, 1)
+
 alexandre = "https://proclubshead.com/22/club/pc-69685/player/Lanceou/form-league/"
 rachel = "https://proclubshead.com/22/club/pc-69685/player/RachelLaFleur/form-league/"
 pierre = "https://proclubshead.com/22/club/pc-69685/player/Sandishh/form-league/"
@@ -32,8 +37,6 @@ header_pd = ["Pd Alexandre", "Pd Rachel", "Pd Pierre", "Pd Baptiste", "Pd Romain
 comptes = [alexandre,rachel,pierre,baptiste,romain,paul]
 header = ["Alexandre","Rachel","Pierre","Baptiste","Romain","Paul"]
 
-
-nb_match_joues = stm.slider('Nombre de matchs', 5, 10, 10, 1)
 
 
 #Récupération note joueurs
