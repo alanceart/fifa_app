@@ -184,9 +184,9 @@ score_equipe = score_equipe[val_temp:]
 #Verif_joueurs
 
 if 'Alexandre' not in joueurs_selectionnes:
-    df_note.drop['Alexandre']
-    df_but.drop['Alexandre']
-    df_pd.drop['Alexandre']
+    df_note.drop(['Alexandre'])
+    df_but.drop(['Alexandre'])
+    df_pd.drop(['Alexandre'])
 
 
     
