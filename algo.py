@@ -183,23 +183,19 @@ score_equipe = score_equipe[val_temp:]
     
 #Verif_joueurs
 
-if 'Alexandre' not in joueurs_selectionnes:
-    df_note.drop(columns=['Alexandre'])
-    df_but.drop(columns=['Alexandre'])
-    df_pd.drop(columns=['Alexandre'])
-
-
+for i in header :
+    if i not in joueurs_selectionnes:
+        df_note.drop(columns=[i])
+        df_but.drop(columns=[i])
+        df_pd.drop(columns=[i])
     
 #Plot
 
 fig = plt.figure()
-plt.plot(df_note.index,df_note["Rachel"],linestyle='-', marker='.', markersize = 10, label="Rachel", color="pink")
-if 'Alexandre' in joueurs_selectionnes:
-    plt.plot(df_note.index,df_note["Alexandre"],linestyle='-', marker='.', markersize = 10, label="Alexandre")
-plt.plot(df_note.index,df_note["Pierre"],linestyle='-', marker='.', markersize = 10, label="Pierre")
-plt.plot(df_note.index,df_note["Baptiste"],linestyle='-', marker='.', markersize = 10, label="Baptiste")
-plt.plot(df_note.index,df_note["Romain"],linestyle='-', marker='.', markersize = 10, label="Romain")
-plt.plot(df_note.index,df_note["Paul"],linestyle='-', marker='.', markersize = 10, label="Paul")
+
+for i in header:
+    if i in joueurs_selectionnes:
+        plt.plot(df_note.index,df_note[i],linestyle='-', marker='.', markersize = 10, label=i)
 
 but = mpimg.imread('./Logo/but.png')
 but = OffsetImage(but, zoom=0.015)
