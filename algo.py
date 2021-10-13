@@ -173,9 +173,9 @@ res_equipe = obtention_res()
 score_equipe = obtention_score()
 
 #Adaptation nombre matchs
-df_note = df_note.head(nb_match_joues)
-df_but = df_but.head(nb_match_joues)
-df_pd = df_pd.head(nb_match_joues)
+df_note = df_note.tail(nb_match_joues)
+df_but = df_but.tail(nb_match_joues)
+df_pd = df_pd.tail(nb_match_joues)
 val_temp = nb_match_joues * -1
 res_equipe = res_equipe[val_temp:]
 score_equipe = score_equipe[val_temp:]
