@@ -14,10 +14,7 @@ import math
 
 #Infos scraping
 
-sidebar = stm.sidebar()
-
-with sidebar :
-    nb_match_joues = stm.slider('Nombre de matchs', 5, 10, 10, 1)
+nb_match_joues = stm.sidebar.slider('Nombre de matchs', 5, 10, 10, 1)
 
 alexandre = "https://proclubshead.com/22/club/pc-69685/player/Lanceou/form-league/"
 rachel = "https://proclubshead.com/22/club/pc-69685/player/RachelLaFleur/form-league/"
