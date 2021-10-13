@@ -109,6 +109,12 @@ def obtention_donnes_but_pd():
     liste_but[liste_but == '--'] = '-1'
     liste_pd = np.asarray(liste_pd)
     liste_pd[liste_pd == '--'] = '-1'
+    
+    long = liste_note.shape[1]
+    match = []
+    for i in range(1,long+1):
+        val = "M" + str(i)
+        match.append(val)
 
     df_but=pd.DataFrame(liste_but, columns=match) 
     df_but.index = header
