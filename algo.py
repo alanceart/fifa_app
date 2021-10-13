@@ -18,6 +18,9 @@ stm.title('Club Pro FC Vadrouille')
 stm.sidebar.header('Paramètres du graphique')
 nb_match_joues = stm.sidebar.slider('Nombre de matchs', 5, 10, 10, 1)
 
+options = st.multiselect('What are your favorite colors',['Green', 'Yellow', 'Red', 'Blue'],['Yellow', 'Red'])
+st.write('You selected:', options)
+
 alexandre = "https://proclubshead.com/22/club/pc-69685/player/Lanceou/form-league/"
 rachel = "https://proclubshead.com/22/club/pc-69685/player/RachelLaFleur/form-league/"
 pierre = "https://proclubshead.com/22/club/pc-69685/player/Sandishh/form-league/"
