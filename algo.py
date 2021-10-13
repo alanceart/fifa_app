@@ -14,6 +14,8 @@ import math
 
 #Infos scraping
 
+stm.title('Club Pro FC Vadrouille')
+stm.sidebar.header('Paramètres du graphique')
 nb_match_joues = stm.sidebar.slider('Nombre de matchs', 5, 10, 10, 1)
 
 alexandre = "https://proclubshead.com/22/club/pc-69685/player/Lanceou/form-league/"
